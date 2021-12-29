@@ -11,7 +11,7 @@ HashTable::HashTable() {
 HashTable::~HashTable() {
     delete[] array;
 }
-void HashTable::add(ChatMember ch_log, char* ch_pas) {
+void HashTable::add(ChatMember ch_log, ChatMember ch_pas) {
     int i = 0;
     int index = -1;
     // берем пробы по всем i от 0 до размера массива
@@ -29,6 +29,26 @@ void HashTable::add(ChatMember ch_log, char* ch_pas) {
     array[index] = Pair(ch_log, ch_pas);
     count++;
 }
+/*
+void HashTable::find(ChatMember ch_log) {
+    int i = 0;
+    int index = -1;
+    // берем пробы по всем i от 0 до размера массива
+    for (i = 0; i < mem_size; i++) {
+        index = hash_func(ch_log, i);
+        cout << "add: index = " << index << endl;
+        if (array[index].status == enPairStatus::free) {
+            // найдена пустая ячейка, занимаем ее
+            break;
+        }
+    }
+    if (i >= mem_size) return; // все перебрали, нет места
+
+    // кладем в свободную ячейку пару
+    array[index] = Pair(ch_log, ch_pas);
+    count++;
+}
+*/
 /*
 void Chat::reg(char _login[LOGINLENGTH], char _pass[], int pass_length) {
 

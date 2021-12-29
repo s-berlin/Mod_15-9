@@ -12,17 +12,19 @@ int main()
 	int pass_length = 0;
 	char* ch_log; 
 	char* ch_pass;
-	int act = 1;
+	int act = 5;
 
 	HashTable ht;
 
 	while (act != 0) {
-		cout <<  "Select action: ";
-		cin >> act;
+		while (act != 0 && act != 1 && act != 2) {
+			cout << "\nSelect action: ";
+			cin >> act;
+		}		
 		
 		switch (act) {
 		case 1:
-			cout << endl << "Registration: enter your login: ";
+			cout << "Registration: enter your login: ";
 			cin >> login;
 			cout << "Registration: enter the password: ";
 			cin >> password;
@@ -42,7 +44,7 @@ int main()
 		default: break;
 
 		}
-
+		if (act != 0) act = 5;
 	}
 
 	ht.show();

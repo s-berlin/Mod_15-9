@@ -11,7 +11,7 @@ public:
 
     HashTable();
     ~HashTable();
-    void add(ChatMember ch_log, char ch_pas[]);
+    void add(ChatMember ch_log, ChatMember ch_pas);
     void show();
 
     void del(ChatMember ch_log);
@@ -19,7 +19,7 @@ public:
 
     friend void test(HashTable& ht);
 
-    void dummy(char* ch_log);
+ //   void dummy(char* ch_log);
 
 private:
     enum enPairStatus {
@@ -32,17 +32,19 @@ private:
 
         Pair() :
             chat_log(""),
-            chat_pass(0),
+            chat_pass(""),
             status(free)
         {}
-        Pair(ChatMember ch_log, char* ch_pas) :
-            chat_pass(ch_pas),
+        Pair(ChatMember ch_log, ChatMember ch_pas) :
+            //           chat_pass(ch_pas),
             status(enPairStatus::engaged) {
             memcpy(chat_log, ch_log, LOGINLENGTH);
+            memcpy(chat_pass, ch_pas, LOGINLENGTH);
         }
         Pair& operator = (const Pair& other) {
-            chat_pass = other.chat_pass;
+ //           chat_pass = other.chat_pass;
             memcpy(chat_log, other.chat_log, LOGINLENGTH);
+            memcpy(chat_pass, other.chat_pass, LOGINLENGTH);
             status = other.status;
 
             return *this;
@@ -54,7 +56,8 @@ private:
         }
 
         ChatMember chat_log;
-        char* chat_pass;
+        ChatMember chat_pass;
+//        string ch_pas;
 
         enPairStatus status;
     };
