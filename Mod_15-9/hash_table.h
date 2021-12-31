@@ -15,7 +15,7 @@ public:
     void show();
 
     void del(ChatMember ch_log);
-    int find(ChatMember ch_log);
+    bool find(ChatMember ch_log);
 
     friend void test(HashTable& ht);
 

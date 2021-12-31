@@ -8,16 +8,16 @@ int main()
 	setlocale(LC_ALL, "");
 	char login[LOGINLENGTH];
 	char password[20] = {};
-	cout << endl << "Возможные действия:  \n   1 - Registration\n   2 - Authorization\n   0 - Exit " << endl << "";
+	cout << endl << "Возможные действия:  \n   1 - Registration\n   2 - Authorization\n   3 - Поиск \n   0 - Exit " << endl << "";
 	int pass_length = 0;
-	char* ch_log; 
-	char* ch_pass;
+//	char* ch_log; 
+//	char* ch_pass;
 	int act = 5;
 
 	HashTable ht;
 
 	while (act != 0) {
-		while (act != 0 && act != 1 && act != 2) {
+		while (act != 0 && act != 1 && act != 2 && act != 3) {
 			cout << "\nSelect action: ";
 			cin >> act;
 		}		
@@ -40,6 +40,12 @@ int main()
 			cin >> password;
 			pass_length = strlen(password);
 			cout << "Authorization: introduced login: " << login << "   password: " << password << "   length: " << pass_length << endl;
+			break;
+		case 3:
+			cout << endl << "Find login: ";
+			cin >> login;	
+			if (ht.find(login))	cout << "Find: introduced login: " << login << "   rezult: Yes" << endl;
+			else 	cout << "Find: introduced login: " << login << "   rezult: No" << endl;
 			break;
 		default: break;
 

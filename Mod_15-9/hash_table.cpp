@@ -18,7 +18,7 @@ void HashTable::add(ChatMember ch_log, ChatMember ch_pas) {
     for (i = 0; i < mem_size; i++) {
         index = hash_func(ch_log, i);
         cout << "add: index = " << index << endl;
-        if (array[index].status == enPairStatus::free) {
+        if (array[index].status == enPairStatus::free || array[index].status == enPairStatus::deleted) {
             // найдена пуста€ €чейка, занимаем ее
             break;
         }
@@ -28,27 +28,36 @@ void HashTable::add(ChatMember ch_log, ChatMember ch_pas) {
     // кладем в свободную €чейку пару
     array[index] = Pair(ch_log, ch_pas);
     count++;
+    cout << "add: count = " << count << endl;
 }
-/*
-void HashTable::find(ChatMember ch_log) {
-    int i = 0;
-    int index = -1;
-    // берем пробы по всем i от 0 до размера массива
-    for (i = 0; i < mem_size; i++) {
-        index = hash_func(ch_log, i);
-        cout << "add: index = " << index << endl;
-        if (array[index].status == enPairStatus::free) {
-            // найдена пуста€ €чейка, занимаем ее
-            break;
-        }
-    }
-    if (i >= mem_size) return; // все перебрали, нет места
 
-    // кладем в свободную €чейку пару
-    array[index] = Pair(ch_log, ch_pas);
-    count++;
+bool HashTable::find(ChatMember ch_log) {
+ 
+    for (int i = 0; i < mem_size; i++) {
+        bool OK = false;
+        int index = hash_func(ch_log, i);
+        cout << "find: index = " << index << endl;
+        if (array[index].status == enPairStatus::free) {
+            // найдена пуста€ €чейка, false
+            cout << "find: array[" << index << "].status = free" << endl;
+            return false;
+        }       
+        if (array[index].status == enPairStatus::engaged) {
+            cout << "find: array[" << index << "].status = engaged" << endl;
+            // найдена зан€та€ €чейка, провер€ем
+            OK = true;
+            for (int j = 0; j < LOGINLENGTH; j++) {
+                cout << "find: array[" << index << "].chat_log[" << j <<"] = " << array[index].chat_log[j];
+                cout << "    ch_log[" << j << "] = " << ch_log[j] << endl;
+                if (array[index].chat_log[j] != ch_log[j]) OK = false;
+            }
+        }
+        if (array[index].status == enPairStatus::deleted) continue;
+        if (i >= mem_size) return false; // все перебрали, не нашли
+        return OK;
+    }
 }
-*/
+
 /*
 void Chat::reg(char _login[LOGINLENGTH], char _pass[], int pass_length) {
 
@@ -91,7 +100,7 @@ bool Chat::login(char _login[LOGINLENGTH], char _pass[], int pass_length) {
 void HashTable::show() {
     setlocale(LC_ALL, "");
 
-    for (int i = 0; i < count; i++) {
+    for (int i = 0; i < mem_size; i++) {
         cout << "array[" << i << "].chat_log = " << array[i].chat_log << "      ";
         for( int j = 0; j < 10; j++) cout << array[i].chat_pass[j];
         cout << endl;
@@ -101,12 +110,13 @@ void HashTable::show() {
 }
 int HashTable::hash_func(ChatMember ch_log, int offset) {
     // calculating the index
-    int prod = 1;
+    int sum = 0;
     for (int i = 0; i < LOGINLENGTH; i++) {
-        prod *= ch_log[i];
+        sum += ch_log[i];
+        cout << " hash_func: ch_log[" << i << "] = " << ch_log[i] << "     sum = " << sum << endl;
     }
-    // cout << " hash_func: sum = " << sum << endl;
+    cout << " hash_func: sum = " << sum << "   return " << (sum % mem_size + offset*offset) % mem_size << endl;
 
     // линейные пробы
-    return (prod % mem_size + offset) % mem_size;
+    return (sum % mem_size + offset*offset) % mem_size;
 }
