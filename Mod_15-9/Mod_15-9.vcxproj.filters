@@ -18,7 +18,7 @@
     <ClInclude Include="hash_table.h">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
-    <ClInclude Include="sha1.h">
+    <ClInclude Include="hf2.h">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
   </ItemGroup>
@@ -26,13 +26,10 @@
     <ClCompile Include="hash_table.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="task.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="sha1.cpp">
+    <ClCompile Include="hf2.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>

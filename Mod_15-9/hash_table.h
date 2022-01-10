@@ -1,8 +1,10 @@
 #pragma once
-
 #include <string.h>
+#include <iostream>
 
-#define LOGINLENGTH 10
+using namespace std;
+
+#define LOGINLENGTH 20
 
 typedef char ChatMember[LOGINLENGTH]; // type - login
 
@@ -11,15 +13,15 @@ public:
 
     HashTable();
     ~HashTable();
-    void add(ChatMember ch_log, ChatMember ch_pas);
+ //   void add(ChatMember ch_log, ChatMember ch_pas);
+    void reg(ChatMember ch_log, char ch_pas[], int pass_length);
+    bool login(ChatMember ch_log, char ch_pas[], int pass_length);
     void show();
 
     void del(ChatMember ch_log);
     bool find(ChatMember ch_log);
 
     friend void test(HashTable& ht);
-
- //   void dummy(char* ch_log);
 
 private:
     enum enPairStatus {
@@ -32,19 +34,19 @@ private:
 
         Pair() :
             chat_log(""),
-            chat_pass(""),
+            pass_hf2_hash(0),
             status(free)
         {}
-        Pair(ChatMember ch_log, ChatMember ch_pas) :
-            //           chat_pass(ch_pas),
+        Pair(ChatMember ch_log, double sh1) :
             status(enPairStatus::engaged) {
             memcpy(chat_log, ch_log, LOGINLENGTH);
-            memcpy(chat_pass, ch_pas, LOGINLENGTH);
+            pass_hf2_hash = sh1;
+  //          cout << "   hash_table: Pair:  sh1 = " << sh1 << "   pass_hf2_hash = " << pass_hf2_hash  << endl;
         }
         Pair& operator = (const Pair& other) {
- //           chat_pass = other.chat_pass;
             memcpy(chat_log, other.chat_log, LOGINLENGTH);
-            memcpy(chat_pass, other.chat_pass, LOGINLENGTH);
+            pass_hf2_hash = other.pass_hf2_hash;
+  //          cout << "   hash_table: Pair& operator:  chat_log = " << chat_log << "    pass_hf2_hash = " << pass_hf2_hash << endl;
             status = other.status;
 
             return *this;
@@ -52,13 +54,11 @@ private:
 
         bool operator == (const Pair& other) {
             return  status == other.status &&
-                (status != enPairStatus::engaged || (chat_pass == other.chat_pass && !strcmp(chat_log, other.chat_log)));
+                (status != enPairStatus::engaged || (pass_hf2_hash == other.pass_hf2_hash && !strcmp(chat_log, other.chat_log)));
         }
 
         ChatMember chat_log;
-        ChatMember chat_pass;
-//        string ch_pas;
-
+        double pass_hf2_hash;
         enPairStatus status;
     };
 
