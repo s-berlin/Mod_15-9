@@ -8,7 +8,7 @@ bool pr = false; // Need debugging printing
 
 int main()
 {
-	setlocale(LC_ALL, "");
+//	setlocale(LC_ALL, "");
 	char login[LOGINLENGTH] = {};
 	char input_str[LOGINLENGTH] = {};
 	char password[LOGINLENGTH] = {};
